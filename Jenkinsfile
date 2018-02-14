@@ -13,14 +13,14 @@ node {
   }
 
   stage('Build Docker') {
-    //def app = docker.build("menpedro/myspringboot:${env.BUILD_ID}")
-    def app = docker.build("menpedro/myspringboot:latest")
+    //def app = docker.build("myspringboot:${env.BUILD_ID}")
+    def app = docker.build("myspringboot:latest")
   }
 
   stage('Push Docker to ECR') {
     docker.withRegistry("https://264359801351.dkr.ecr.us-east-1.amazonaws.com", "ecr:us-east-1:menpedro") {
-      //docker.image("menpedro/myspringboot").push(${env.BUILD_ID})
-      docker.image("menpedro/myspringboot").push("latest")
+      //docker.image("myspringboot").push(${env.BUILD_ID})
+      docker.image("myspringboot").push("latest")
     }
   }
 
