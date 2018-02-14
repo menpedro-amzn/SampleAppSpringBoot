@@ -18,9 +18,7 @@ node {
   }
 
   stage('Push Docker to ECR') {
-    agent {
-      docker { image 'fstab:aws-cli' }
-    }
+    sh "pip install awscli --user"
     sh("eval \$(aws ecr get-login --no-include-email | sed 's|https://||')")
     docker.withRegistry("https://264359801351.dkr.ecr.us-east-1.amazonaws.com", "ecr:us-east-1:menpedro") {
       //docker.image("myspringboot").push(${env.BUILD_ID})
