@@ -14,7 +14,7 @@
 		<version>2.0.0.BUILD-SNAPSHOT</version>
 	</parent>
 
-  <!-- The repository with the image name, which will end up here as springio/... -->
+  <!-- The repository with the image name, which will end up here as menpedro/... -->
   <properties>
    <docker.image.prefix>menpedro</docker.image.prefix>
   </properties>
