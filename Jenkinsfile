@@ -18,7 +18,7 @@ node {
   }
 
   stage('Push Docker to ECR') {
-    sh "sudo apt-get install python3"
+    sh "apt-get install python3"
     sh "curl \"https://s3.amazonaws.com/aws-cli/awscli-bundle.zip\" -o \"awscli-bundle.zip\""
     sh "unzip awscli-bundle.zip"
     sh "./awscli-bundle/install -b ~/bin/aws"
