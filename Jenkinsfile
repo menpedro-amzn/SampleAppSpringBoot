@@ -13,7 +13,9 @@ pipeline {
     }
     stage('Build container') {
       steps {
-        docker.build("menpedro/myspringboot")
+        script {
+          def app = docker.build("menpedro/myspringboot")
+        }
       }
     }
   }
