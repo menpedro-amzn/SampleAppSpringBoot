@@ -1,6 +1,4 @@
 pipeline {
-  def app
-
   agent {
     docker {
       image 'maven:3-alpine'
@@ -15,7 +13,7 @@ pipeline {
     }
     stage('Build container') {
       steps {
-        app = docker.build("menpedro/myspringboot")
+        docker.build("menpedro/myspringboot")
       }
     }
   }
