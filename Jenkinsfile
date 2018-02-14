@@ -11,4 +11,8 @@ node {
       sh "mvn -B -DskipTests clean package"
     }
   }
+
+  stage('Build Docker') {
+    def app = docker.build("menpedro/myspringboot:${env.BUILD_ID}")
+  }
 }
