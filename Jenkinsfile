@@ -13,8 +13,7 @@ node {
   }
 
   stage('Build Docker') {
-    //def app = docker.build("myspringboot:${env.BUILD_ID}")
-    def app = docker.build("myspringboot:latest")
+    def app = docker.build("myspringboot:latest", "--build-arg JAR_FILE=target/myspringboot-0.0.1-SNAPSHOT.jar .")
   }
 
   stage('Push Docker to ECR') {
@@ -25,7 +24,7 @@ node {
     }
   }
 
-  stage('Redeploy to ECS') {
-    sh "aws ecs update-service --cluster jenkins --service myspringboot --desired-count 1 --profile menpedro --region us-east-1"
-  }
+//  stage('Redeploy to ECS') {
+//    sh "aws ecs update-service --cluster jenkins --service myspringboot --desired-count 1 --force-new-deployment --profile menpedro --region us-east-1"
+//  }
 }
