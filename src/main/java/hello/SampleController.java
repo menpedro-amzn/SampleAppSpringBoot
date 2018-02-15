@@ -17,7 +17,7 @@ public class SampleController {
     @RequestMapping("/")
     @ResponseBody
     String home() {
-        return "Hello World!. Current time is: " + dateFormat.format(new Date());
+        return "Hello There!. Current time is: " + dateFormat.format(new Date());
     }
 
     public static void main(String[] args) throws Exception {
