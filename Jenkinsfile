@@ -24,7 +24,7 @@ node {
     }
   }
 
-//  stage('Redeploy to ECS') {
-//    sh "aws ecs update-service --cluster jenkins --service myspringboot --desired-count 1 --force-new-deployment --profile menpedro --region us-east-1"
-//  }
+  stage('Redeploy to ECS') {
+    sh "aws ecs update-service --cluster jenkins --service myspringboot --desired-count 2 --force-new-deployment --profile menpedro --region us-east-1"
+  }
 }
