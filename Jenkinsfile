@@ -13,7 +13,13 @@ node {
   }
 
   stage('Build Docker') {
-    def app = docker.build("myspringboot:latest", "--build-arg JAR_FILE=target/myspringboot-0.0.1-SNAPSHOT.jar .")
+    withMaven(
+    // Maven installation declared in the Jenkins "Global Tool Configuration"
+    maven: 'M3') {
+      // Run the maven build
+      sh "mvn install dockerfile:build"
+    }
+    //def app = docker.build("myspringboot:latest", "--build-arg JAR_FILE=target/myspringboot-0.0.1-SNAPSHOT.jar .")
   }
 
   stage('Push Docker to ECR') {
