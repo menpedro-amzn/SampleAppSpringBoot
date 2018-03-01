@@ -32,9 +32,10 @@ node {
 
   stage('Redeploy to ECS') {
     sh "aws ecs update-service --cluster jenkins --service myspringboot --desired-count 2 --force-new-deployment --profile menpedro --region us-east-1"
+    sleep 15
   }
 
   stage('Load test') {
-    sh "/Users/menpedro/WorkDocs/menpedro/AWS/OpenBank/LoadTesting/gatling-charts-highcharts-bundle-2.3.0/bin/gatling.sh -sf . -s ok.SampleAppSpringBootTest"
+    sh "/Users/menpedro/WorkDocs/menpedro/AWS/OpenBank/LoadTesting/gatling-charts-highcharts-bundle-2.3.0/bin/gatling.sh -sf src/main/test -s ok.SampleAppSpringBootTest"
   }
 }
