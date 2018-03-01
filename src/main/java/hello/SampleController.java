@@ -1,5 +1,7 @@
 package hello;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.*;
 import org.springframework.stereotype.*;
@@ -12,15 +14,15 @@ import java.util.Date;
 @Controller
 @EnableAutoConfiguration
 public class SampleController {
-    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+  private static final String template = "Hello, %s!";
+  private final AtomicLong counter = new AtomicLong();
 
-    @RequestMapping("/")
-    @ResponseBody
-    String home() {
-        return "Current time is: " + dateFormat.format(new Date());
-    }
+  @RequestMapping("/")
+  public @ResponseBody Greeting sayHello(@RequestParam(value="name", required=false, defaultValue="Stranger") String name) {
+      return new Greeting(counter.incrementAndGet(), String.format(template, name));
+  }
 
-    public static void main(String[] args) throws Exception {
-        SpringApplication.run(SampleController.class, args);
-    }
+  public static void main(String[] args) throws Exception {
+      SpringApplication.run(SampleController.class, args);
+  }
 }
