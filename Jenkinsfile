@@ -30,13 +30,17 @@ node {
     }
   }
 
-  stage('Redeploy to ECS') {
-    sh "aws ecs update-service --cluster jenkins --service myspringboot --desired-count 2 --force-new-deployment --profile menpedro --region us-east-1"
+  stage('Redeploy to ECS PreProd') {
+    sh "aws ecs update-service --cluster jenkins --service myspringboot-pre --desired-count 1 --force-new-deployment --profile menpedro --region us-east-1"
     sleep 30
   }
 
   stage('Load test') {
-    sh "echo $PATH"
     sh "gatling.sh -sf src/main/test -s ok.SampleAppSpringBootTest"
   }
+
+  stage('Redeploy to ECS Prod') {
+    sh "aws ecs update-service --cluster jenkins --service myspringboot --desired-count 1 --force-new-deployment --profile menpedro --region us-east-1"
+  }
+
 }
