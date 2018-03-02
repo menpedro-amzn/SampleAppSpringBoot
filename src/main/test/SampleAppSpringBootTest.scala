@@ -19,7 +19,7 @@ class SampleAppSpringBootTest extends Simulation {
       .get("/")
       .check(status.is(200), jsonPath("$.content").exists))
 
-  setUp(scn.inject(atOnceUsers(500)))
+  setUp(scn.inject(constantUsersPerSec(200) during(3 minutes)))
     .protocols(httpConf)
     .assertions(
       forAll.failedRequests.percent.is(0),
