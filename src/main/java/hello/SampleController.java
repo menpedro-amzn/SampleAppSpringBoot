@@ -19,6 +19,11 @@ public class SampleController {
 
   @RequestMapping("/")
   public @ResponseBody Greeting sayHello(@RequestParam(value="name", required=false, defaultValue="Stranger") String name) {
+      try {
+        Thread.currentThread().sleep(1000);
+      } catch (Exception e){
+        // nothing
+      }
       return new Greeting(counter.incrementAndGet(), String.format(template, name));
   }
 
