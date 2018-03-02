@@ -23,6 +23,6 @@ class SampleAppSpringBootTest extends Simulation {
     .protocols(httpConf)
     .assertions(
       forAll.failedRequests.percent.is(0),
-      global.responseTime.percentile3.lt(600)
+      global.responseTime.percentile3.lt(1000)
     )
 }

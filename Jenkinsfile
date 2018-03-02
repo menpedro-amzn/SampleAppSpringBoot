@@ -36,6 +36,6 @@ node {
   }
 
   stage('Load test') {
-    sh "/Users/menpedro/WorkDocs/menpedro/AWS/OpenBank/LoadTesting/gatling-charts-highcharts-bundle-2.3.0/bin/gatling.sh -sf src/main/test -s ok.SampleAppSpringBootTest"
+    sh "gatling.sh -sf src/main/test -s ok.SampleAppSpringBootTest"
   }
 }
