@@ -7,7 +7,7 @@ import scala.concurrent.duration._
 class SampleAppSpringBootTest extends Simulation {
 
   val httpConf = http
-    .baseURL("http://myspringboot-111930942.us-east-1.elb.amazonaws.com")
+    .baseURL("http://myspringboot-pre-290671796.us-east-1.elb.amazonaws.com")
     .acceptHeader("text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")
     .doNotTrackHeader("1")
     .acceptLanguageHeader("en-US,en;q=0.5")
@@ -19,7 +19,7 @@ class SampleAppSpringBootTest extends Simulation {
       .get("/")
       .check(status.is(200), jsonPath("$.content").exists))
 
-  setUp(scn.inject(constantUsersPerSec(200) during(3 minutes)))
+  setUp(scn.inject(constantUsersPerSec(10) during(3 minutes)))
     .protocols(httpConf)
     .assertions(
       forAll.failedRequests.percent.is(0),
