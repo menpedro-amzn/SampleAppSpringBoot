@@ -36,6 +36,7 @@ node {
   }
 
   stage('Load test') {
+    sh "echo $PATH"
     sh "gatling.sh -sf src/main/test -s ok.SampleAppSpringBootTest"
   }
 }
