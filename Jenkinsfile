@@ -36,6 +36,7 @@ node {
   }
 
   stage('Load test') {
+    sh "echo $FLOOD_TOKEN"
     sh "./src/main/test/floodio.sh $FLOOD_TOKEN ./src/main/test/SampleAppSpringBootTest.scala ${env.BUILD_ID}"
     //sh "gatling.sh -sf src/main/test -s ok.SampleAppSpringBootTest"
   }
