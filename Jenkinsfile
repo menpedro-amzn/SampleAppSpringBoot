@@ -36,7 +36,8 @@ node {
   }
 
   stage('Load test') {
-    sh "gatling.sh -sf src/main/test -s ok.SampleAppSpringBootTest"
+    sh "./src/main/test/floodio.sh flood_live_c43c9a25855faf461dd70d8096d800cdcab4dd8968 ${env.BUILD_ID}"
+    //sh "gatling.sh -sf src/main/test -s ok.SampleAppSpringBootTest"
   }
 
   stage('Redeploy to ECS Prod') {
