@@ -2,7 +2,8 @@
 set -e
 
 FLOOD_API_TOKEN=$1
-FLOOD_NAME=$2
+FLOOD_SCRIPT_FILENAME=$2
+FLOOD_NAME=$3
 
 # Check we have the jq binary to make parsing JSON responses a bit easier
 command -v jq >/dev/null 2>&1 || \
@@ -15,7 +16,7 @@ flood_uuid=$(curl -u $FLOOD_API_TOKEN: -X POST https://api.flood.io/floods \
 -F "flood[tool]=gatling" \
 -F "flood[privacy]=public" \
 -F "flood[name]=$FLOOD_NAME" \
--F "flood_files[]=@SampleAppSpringBootTest.scala" \
+-F "flood_files[]=@$FLOOD_SCRIPT_FILENAME" \
 -F "flood[grids][][infrastructure]=demand" \
 -F "flood[grids][][instance_quantity]=1" \
 -F "flood[grids][][region]=us-east-1" \
@@ -38,7 +39,7 @@ echo
 echo "[$(date +%FT%T)+00:00] Detailed results at https://flood.io/$flood_uuid"
 echo "$flood_report"
 
-# Validate error rate
+# Validate error rate and response time
 error_rate=$(curl --silent --user $FLOOD_API_TOKEN: https://api.flood.io/floods/$flood_uuid | jq -r .error_rate)
 if [ "$error_rate" -gt "0" ]; then
   echo "Flood test failed with error rate $error_rate%"

@@ -36,7 +36,7 @@ node {
   }
 
   stage('Load test') {
-    sh "./src/main/test/floodio.sh flood_live_c43c9a25855faf461dd70d8096d800cdcab4dd8968 ${env.BUILD_ID}"
+    sh "./src/main/test/floodio.sh flood_live_c43c9a25855faf461dd70d8096d800cdcab4dd8968 ./src/main/test/SampleAppSpringBootTest.scala ${env.BUILD_ID}"
     //sh "gatling.sh -sf src/main/test -s ok.SampleAppSpringBootTest"
   }
 
