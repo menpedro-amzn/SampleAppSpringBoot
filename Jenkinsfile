@@ -27,7 +27,7 @@ node {
 
   stage('Load test') {
     FLOOD_TOKEN = sh (
-      script: "aws ssm get-parameters --names 'FloodIoToken' --with-decryption | jq -r '.Parameters[0].Value'",
+      script: "aws ssm get-parameters --names 'FloodIoToken' --with-decryption --region us-east-1 | jq -r '.Parameters[0].Value'",
       returnStdout: true
     ).trim()
     //sh "./src/main/test/floodio.sh $FLOOD_TOKEN ./src/main/test/SampleAppSpringBootTest.scala ${env.BUILD_ID}"
