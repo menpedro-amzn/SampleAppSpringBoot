@@ -4,21 +4,11 @@ node {
   }
 
   stage('Build') {
-    withMaven(
-    // Maven installation declared in the Jenkins "Global Tool Configuration"
-    maven: 'M3') {
-      // Run the maven build
-      sh "mvn -B -DskipTests clean package"
-    }
+    sh "mvn -B -DskipTests clean package"
   }
 
   stage('Build Docker') {
-    withMaven(
-    // Maven installation declared in the Jenkins "Global Tool Configuration"
-    maven: 'M3') {
-      // Run the maven build
-      sh "mvn install dockerfile:build"
-    }
+    sh "mvn install dockerfile:build"
     //def app = docker.build("myspringboot:latest", "--build-arg JAR_FILE=target/myspringboot-0.0.1-SNAPSHOT.jar .")
   }
 
