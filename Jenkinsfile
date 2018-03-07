@@ -13,21 +13,21 @@ node {
   }
 
   stage('Push Docker to ECR') {
-    sh("eval \$(aws ecr get-login --no-include-email --profile menpedro| sed 's|https://||')")
-    docker.withRegistry("https://264359801351.dkr.ecr.us-east-1.amazonaws.com", "ecr:us-east-1:menpedro") {
-      docker.image("myspringboot").push("${env.BUILD_ID}")
-      docker.image("myspringboot").push("latest")
-    }
+    sh("eval \$(aws ecr get-login --no-include-email | sed 's|https://||')")
+    sh("docker tag myspringboot 264359801351.dkr.ecr.us-east-1.amazonaws.com/myspringboot:${env.BUILD_ID}")
+    sh("docker push 264359801351.dkr.ecr.us-east-1.amazonaws.com/myspringboot:${env.BUILD_ID}")
+    sh("docker tag myspringboot 264359801351.dkr.ecr.us-east-1.amazonaws.com/myspringboot:latest")
+    sh("docker push 264359801351.dkr.ecr.us-east-1.amazonaws.com/myspringboot:latest")    
   }
 
   stage('Redeploy to ECS PreProd') {
-    sh "aws ecs update-service --cluster jenkins --service myspringboot-pre --desired-count 1 --force-new-deployment --profile menpedro --region us-east-1"
+    sh "aws ecs update-service --cluster jenkins --service myspringboot-pre --desired-count 1 --force-new-deployment --region us-east-1"
     sleep 30
   }
 
   stage('Load test') {
     FLOOD_TOKEN = sh (
-      script: "aws ssm get-parameters --names 'FloodIoToken' --with-decryption --profile menpedro | jq -r '.Parameters[0].Value'",
+      script: "aws ssm get-parameters --names 'FloodIoToken' --with-decryption | jq -r '.Parameters[0].Value'",
       returnStdout: true
     ).trim()
     //sh "./src/main/test/floodio.sh $FLOOD_TOKEN ./src/main/test/SampleAppSpringBootTest.scala ${env.BUILD_ID}"
@@ -35,7 +35,7 @@ node {
   }
 
   stage('Redeploy to ECS Prod') {
-    sh "aws ecs update-service --cluster jenkins --service myspringboot --desired-count 1 --force-new-deployment --profile menpedro --region us-east-1"
+    sh "aws ecs update-service --cluster jenkins --service myspringboot --desired-count 1 --force-new-deployment --region us-east-1"
   }
 
 }
