@@ -34,7 +34,7 @@ pipeline {
 
     stage('Load test') {
       steps {
-        FLOOD_TOKEN = sh (
+        def FLOOD_TOKEN = sh (
           script: "aws ssm get-parameters --names 'FloodIoToken' --with-decryption --region us-east-1 | jq -r '.Parameters[0].Value'",
           returnStdout: true
         ).trim()
