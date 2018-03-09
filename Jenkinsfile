@@ -6,7 +6,6 @@ pipeline {
   }
 
   stage('Build Docker') {
-    //sh "mvn install dockerfile:build"
     docker.build("myspringboot:latest", "--build-arg JAR_FILE=target/myspringboot-0.0.1-SNAPSHOT.jar .")
   }
 
