@@ -56,6 +56,9 @@ pipeline {
     }
 
     stage('Redeploy to ECS Prod') {
+      timeout(time:5, unit:'MINUTES') {
+        input message:'Approve deployment?', submitter: 'menpedro'
+      }
       steps {
         sh "aws ecs update-service --cluster jenkins --service myspringboot --desired-count 1 --force-new-deployment --region us-east-1"
       }
