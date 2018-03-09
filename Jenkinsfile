@@ -14,28 +14,27 @@ pipeline {
 
     stage('Security test') {
       steps {
-        sh("mv target/myspringboot-0.0.1-SNAPSHOT.jar target/myspringboot-0.0.1-SNAPSHOT.jar.withdeps")
-        sh("mv target/myspringboot-0.0.1-SNAPSHOT.jar.original target/myspringboot-0.0.1-SNAPSHOT.jar")
-        sh('docker run --rm -v $PWD:/target stono/hawkeye')
-        sh("mv target/myspringboot-0.0.1-SNAPSHOT.jar target/myspringboot-0.0.1-SNAPSHOT.jar.original")
-        sh("mv target/myspringboot-0.0.1-SNAPSHOT.jar.withdeps target/myspringboot-0.0.1-SNAPSHOT.jar")
+        sh "mv target/myspringboot-0.0.1-SNAPSHOT.jar target/myspringboot-0.0.1-SNAPSHOT.jar.withdeps"
+        sh "mv target/myspringboot-0.0.1-SNAPSHOT.jar.original target/myspringboot-0.0.1-SNAPSHOT.jar"
+        sh 'docker run --rm -v $PWD:/target stono/hawkeye'
+        sh "mv target/myspringboot-0.0.1-SNAPSHOT.jar target/myspringboot-0.0.1-SNAPSHOT.jar.original"
+        sh "mv target/myspringboot-0.0.1-SNAPSHOT.jar.withdeps target/myspringboot-0.0.1-SNAPSHOT.jar"
       }
     }
 
     stage('Build Docker') {
       steps {
-        sh("docker build --build-arg JAR_FILE=target/myspringboot-0.0.1-SNAPSHOT.jar -t myspringboot:latest .")
+        sh "docker build --build-arg JAR_FILE=target/myspringboot-0.0.1-SNAPSHOT.jar -t myspringboot:latest ."
       }
     }
 
     stage('Push Docker to ECR') {
       steps {
-        sh("echo ${env.GIT_COMMIT}")
-        sh("eval \$(aws ecr get-login --no-include-email --region us-east-1 | sed 's|https://||')")
-        sh("docker tag myspringboot 264359801351.dkr.ecr.us-east-1.amazonaws.com/myspringboot:${env.GIT_COMMIT}")
-        sh("docker push 264359801351.dkr.ecr.us-east-1.amazonaws.com/myspringboot:${env.GIT_COMMIT}")
-        sh("docker tag myspringboot 264359801351.dkr.ecr.us-east-1.amazonaws.com/myspringboot:latest")
-        sh("docker push 264359801351.dkr.ecr.us-east-1.amazonaws.com/myspringboot:latest")
+        sh "eval \$(aws ecr get-login --no-include-email --region us-east-1 | sed 's|https://||')"
+        sh "docker tag myspringboot 264359801351.dkr.ecr.us-east-1.amazonaws.com/myspringboot:${env.GIT_COMMIT}"
+        sh "docker push 264359801351.dkr.ecr.us-east-1.amazonaws.com/myspringboot:${env.GIT_COMMIT}"
+        sh "docker tag myspringboot 264359801351.dkr.ecr.us-east-1.amazonaws.com/myspringboot:latest"
+        sh "docker push 264359801351.dkr.ecr.us-east-1.amazonaws.com/myspringboot:latest"
       }
     }
 
