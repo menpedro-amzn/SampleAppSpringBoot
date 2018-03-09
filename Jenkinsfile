@@ -8,6 +8,16 @@ pipeline {
       }
     }
 
+    stage('Security test') {
+      steps {
+        sh("mv target/myspringboot-0.0.1-SNAPSHOT.jar target/myspringboot-0.0.1-SNAPSHOT.jar.withdeps")
+        sh("mv target/myspringboot-0.0.1-SNAPSHOT.jar.original target/myspringboot-0.0.1-SNAPSHOT.jar")
+        sh('docker run --rm -v $PWD:/target stono/hawkeye')
+        sh("mv target/myspringboot-0.0.1-SNAPSHOT.jar target/myspringboot-0.0.1-SNAPSHOT.jar.original")
+        sh("mv target/myspringboot-0.0.1-SNAPSHOT.jar.withdeps target/myspringboot-0.0.1-SNAPSHOT.jar")
+      }
+    }
+
     stage('Build Docker') {
       steps {
         sh("docker build --build-arg JAR_FILE=target/myspringboot-0.0.1-SNAPSHOT.jar -t myspringboot:latest .")
