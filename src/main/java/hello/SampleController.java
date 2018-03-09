@@ -16,17 +16,21 @@ import  java.util.Random;
 @EnableAutoConfiguration
 public class SampleController {
   private static final String template = "Hello, %s!";
-  //private final AtomicLong counter = new AtomicLong();
+  private final AtomicLong counter = new AtomicLong();
 
+/*
   long generateSecretToken() {
       Random r = new Random();
       return r.nextLong();
   }
+*/
 
   @RequestMapping("/")
   public @ResponseBody Greeting sayHello(@RequestParam(value="name", required=false, defaultValue="Stranger") String name) {
-      //return new Greeting(counter.incrementAndGet(), String.format(template, name));
-      return new Greeting(generateSecretToken(), String.format(template, name));
+      return new Greeting(counter.incrementAndGet(), String.format(template, name));
+
+      // use the below to force a security issue
+      //return new Greeting(generateSecretToken(), String.format(template, name));
   }
 
   public static void main(String[] args) throws Exception {
