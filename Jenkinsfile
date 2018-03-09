@@ -40,8 +40,8 @@ pipeline {
             returnStdout: true
           ).trim()
         }
-        sh "./src/main/test/floodio.sh $FLOOD_TOKEN ./src/main/test/SampleAppSpringBootTest.scala ${env.GIT_COMMIT}"
-        //sh "gatling.sh -sf src/main/test -s ok.SampleAppSpringBootTest"
+        //sh "./src/main/test/floodio.sh $FLOOD_TOKEN ./src/main/test/SampleAppSpringBootTest.scala ${env.GIT_COMMIT}"
+        sh "gatling.sh -sf src/main/test -s ok.SampleAppSpringBootTest"
       }
     }
 
