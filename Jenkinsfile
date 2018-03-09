@@ -10,7 +10,7 @@ pipeline {
 
     stage('Build Docker') {
       steps {
-        docker.build("myspringboot:latest", "--build-arg JAR_FILE=target/myspringboot-0.0.1-SNAPSHOT.jar .")
+        sh("docker build --build-arg JAR_FILE=target/myspringboot-0.0.1-SNAPSHOT.jar -t myspringboot:latest .")
       }
     }
 
