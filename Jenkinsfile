@@ -11,7 +11,7 @@ pipeline {
     stage('Security test') {
       agent {
           docker {
-            image 'stono:hawkeye',
+            image 'stono:hawkeye'
             args '-v $PWD:/target'
           }
       }
