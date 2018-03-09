@@ -13,6 +13,7 @@ node {
   }
 
   stage('Push Docker to ECR') {
+    sh("echo ${env.GIT_COMMIT}")
     sh("eval \$(aws ecr get-login --no-include-email --region us-east-1 | sed 's|https://||')")
     sh("docker tag myspringboot 264359801351.dkr.ecr.us-east-1.amazonaws.com/myspringboot:${env.GIT_COMMIT}")
     sh("docker push 264359801351.dkr.ecr.us-east-1.amazonaws.com/myspringboot:${env.GIT_COMMIT}")
