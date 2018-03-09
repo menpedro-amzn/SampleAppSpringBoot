@@ -34,10 +34,12 @@ pipeline {
 
     stage('Load test') {
       steps {
-        def FLOOD_TOKEN = sh (
-          script: "aws ssm get-parameters --names 'FloodIoToken' --with-decryption --region us-east-1 | jq -r '.Parameters[0].Value'",
-          returnStdout: true
-        ).trim()
+        script {
+          FLOOD_TOKEN = sh (
+            script: "aws ssm get-parameters --names 'FloodIoToken' --with-decryption --region us-east-1 | jq -r '.Parameters[0].Value'",
+            returnStdout: true
+          ).trim()
+        }
         //sh "./src/main/test/floodio.sh $FLOOD_TOKEN ./src/main/test/SampleAppSpringBootTest.scala ${env.GIT_COMMIT}"
         sh "gatling.sh -sf src/main/test -s ok.SampleAppSpringBootTest"
       }
