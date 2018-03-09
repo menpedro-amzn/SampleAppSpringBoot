@@ -1,10 +1,6 @@
 pipeline {
   agent any
 
-  stage('Checkout') {
-    checkout scm
-  }
-
   stage('Build') {
     sh "mvn -B -DskipTests clean package"
   }
