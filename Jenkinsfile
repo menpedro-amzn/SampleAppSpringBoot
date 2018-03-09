@@ -9,10 +9,16 @@ pipeline {
     }
 
     stage('Security test') {
+      agent {
+          docker {
+            image 'stono:hawkeye',
+            args '-v $PWD:/target'
+          }
+      }
       steps {
         sh("mv target/myspringboot-0.0.1-SNAPSHOT.jar target/myspringboot-0.0.1-SNAPSHOT.jar.withdeps")
         sh("mv target/myspringboot-0.0.1-SNAPSHOT.jar.original target/myspringboot-0.0.1-SNAPSHOT.jar")
-        sh('docker run --rm -v $PWD:/target stono/hawkeye')
+        sh("hawkeye scan")
         sh("mv target/myspringboot-0.0.1-SNAPSHOT.jar target/myspringboot-0.0.1-SNAPSHOT.jar.original")
         sh("mv target/myspringboot-0.0.1-SNAPSHOT.jar.withdeps target/myspringboot-0.0.1-SNAPSHOT.jar")
       }
