@@ -57,11 +57,11 @@ pipeline {
 
     stage('Redeploy to ECS Prod') {
       options {
-          timeout(time: 5, unit: 'MINUTES') 
+          timeout(time: 5, unit: 'MINUTES')
       }
       input {
-        message:"Approve deployment?"
-        ok "Yes, we should."
+        message: "Approve deployment?"
+        ok: "Yes, we should."
         submitter: "menpedro"
       }
       steps {
