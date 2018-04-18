@@ -50,7 +50,8 @@ pipeline {
       }
     }
 
-    stage('Load test') {
+/*
+    stage('Load test - FloodIO') {
       steps {
         script {
           FLOOD_TOKEN = sh (
@@ -58,8 +59,14 @@ pipeline {
             returnStdout: true
           ).trim()
         }
-        //sh "./src/main/test/floodio.sh $FLOOD_TOKEN ./src/main/test/SampleAppSpringBootTest.scala ${env.GIT_COMMIT}"
-        sh "gatling.sh -sf src/main/test -s ok.SampleAppSpringBootTest"
+        sh "./src/main/test/floodio.sh $FLOOD_TOKEN ./src/main/test/SampleAppSpringBootTest.scala ${env.GIT_COMMIT}"
+      }
+    }
+*/
+
+    stage('Load test - Gatling') {
+      steps {
+        sh 'docker run --rm -v $PWD:/my-app -a stdin -a stdout -i -t denvazh/gatling -sf /my-app/src/main/test -s ok.SampleAppSpringBootTest'
       }
     }
 
