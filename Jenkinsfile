@@ -66,7 +66,7 @@ pipeline {
 
     stage('Load test - Gatling') {
       steps {
-        sh 'docker run --rm -v $PWD:/my-app -a stdin -a stdout -i -t denvazh/gatling -sf /my-app/src/main/test -s ok.SampleAppSpringBootTest'
+        sh 'docker run --rm -v $PWD:/my-app denvazh/gatling -sf /my-app/src/main/test -s ok.SampleAppSpringBootTest'
       }
     }
 
