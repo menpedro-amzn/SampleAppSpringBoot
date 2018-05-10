@@ -7,8 +7,8 @@ phases:
       - aws --version
       - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
       - REPOSITORY_URI=264359801351.dkr.ecr.us-east-1.amazonaws.com/myspringboot
-      - echo $CODEBUILD_RESOLVED_SOURCE_VERSION
-      - IMAGE_TAG=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+      - cat commit_id.txt
+      - IMAGE_TAG=$(cat commit_id.txt | cut -c 1-7)
   build:
     commands:
       - echo Building the Docker image...
