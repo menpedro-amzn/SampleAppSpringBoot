@@ -12,3 +12,4 @@ phases:
 artifacts:
   files:
     - target/myspringboot-0.0.1-SNAPSHOT.jar
+    - buildspec.docker.yml
