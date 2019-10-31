@@ -1,0 +1,5 @@
+version: 0.2
+phases:
+  build:
+    commands:
+      - docker run --rm -v $PWD:/my-app denvazh/gatling -sf /my-app/src/main/test -s ok.SampleAppSpringBootTest
