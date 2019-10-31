@@ -7,7 +7,7 @@ import scala.concurrent.duration._
 class SampleAppSpringBootTest extends Simulation {
 
   val httpConf = http
-    .baseUrl("http://myservice-1807529188.us-east-1.elb.amazonaws.com")
+    .baseUrl("http://myservice-pre-2016077239.us-east-1.elb.amazonaws.com")
     .acceptHeader("text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")
     .doNotTrackHeader("1")
     .acceptLanguageHeader("en-US,en;q=0.5")
