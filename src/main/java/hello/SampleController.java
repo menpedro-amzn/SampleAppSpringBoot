@@ -28,13 +28,12 @@ public class SampleController {
   @RequestMapping("/")
   public @ResponseBody Greeting sayHello(@RequestParam(value="name", required=false, defaultValue="Stranger") String name) {
       // use the below to force a load test issue
-/*    
       try {
         Thread.sleep(1000);
       } catch (InterruptedException e) {
         // nothing
       }
-*/
+
       return new Greeting(counter.incrementAndGet(), String.format(template, name));
 
       // use the below to force a security issue
