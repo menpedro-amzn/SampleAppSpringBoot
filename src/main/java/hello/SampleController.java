@@ -15,7 +15,7 @@ import  java.util.Random;
 @Controller
 @EnableAutoConfiguration
 public class SampleController {
-  private static final String template = "Hello, %s!";
+  private static final String template = "Hola, %s!";
   private final AtomicLong counter = new AtomicLong();
 
 /*
